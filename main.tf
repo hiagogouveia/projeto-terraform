@@ -17,9 +17,14 @@ resource "aws_instance" "app_server" {
   ami           = "ami-0453ec754f44f9a4a"
   instance_type = "t2.micro"
   key_name = "key-pair-hexa-burguer"
-
+  user_data = <<-EOF
+                #!/bin/bash
+            cd /home/
+            echo "<h1>Feito com Terraform</h1>" > index.html
+            nohup busybox httpd -f -p 8080 &
+                EOF
   tags = {
-    Name = "ExampleAppServerInstance-terraform"
+    Name = "teste-terraform"
   }
 }
 
