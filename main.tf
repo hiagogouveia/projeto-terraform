@@ -9,14 +9,14 @@ terraform {
   required_version = ">= 1.1.3"
 }
 
-provider "aws" {
+provider "aws"  {
   region  = "us-east-1"
 }
 
 resource "aws_instance" "app_server" {
   ami           = "ami-0453ec754f44f9a4a"
   instance_type = "t2.micro"
-  key_name = "key-pair-hexa-burguer"
+  key_name = "aws-us-east-1"
   user_data = <<-EOF
                 #!/bin/bash
             cd /home/
