@@ -13,7 +13,8 @@ module "aws-dev" {
   instance_type = "t2.micro"
   regiao_aws    = "us-east-1"
   chave         = "Iac-Dev"
-  ami = data.aws_ami.ubuntu.id
+  # ami = data.aws_ami.ubuntu.id
+  ami = module.aws-dev.ami_id
 }
 
 output "IP" {

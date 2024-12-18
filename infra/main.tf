@@ -23,13 +23,9 @@ resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   key_name = var.chave
-  security_groups = ["${aws_security_group.SG-ssh.id}"]
-  # user_data = <<-EOF
-  #               #!/bin/bash
-  #           cd /home/
-  #           echo "<h1>Feito com Terraform</h1>" > index.html
-  #           nohup busybox httpd -f -p 8080 &
-  #               EOF
+  vpc_security_group_ids = ["${aws_security_group.SG-ssh.id}"]
+  user_data_base64 = base64encode(file("bootstrap.sh"))
+
   tags = {
     Name = "teste-terraform"
   }
@@ -42,5 +38,9 @@ resource "aws_key_pair" "chaveSSH" {
 
 output "IP_publico" {
   value = aws_instance.app_server.public_ip
+}
+
+output "ami_id" {
+  value = data.aws_ami.ubuntu.id
 }
 
